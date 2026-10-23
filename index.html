@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monirul Skin Lab</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff8f5;
+  color: #382b32;
+}
+header {
+  background: #75465b;
+  color: white;
+  text-align: center;
+  padding: 25px 12px;
+}
+header h1 {
+  margin: 0 0 8px;
+}
+main {
+  max-width: 600px;
+  margin: 25px auto;
+  padding: 20px;
+}
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 3px 15px #00000010;
+}
+label {
+  display: block;
+  margin-top: 18px;
+  font-weight: bold;
+}
+select, button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+select {
+  border: 1px solid #c9b5bd;
+  background: white;
+}
+button {
+  border: none;
+  background: #75465b;
+  color: white;
+  font-weight: bold;
+  margin-top: 24px;
+}
+#result {
+  display: none;
+  margin-top: 20px;
+  padding: 16px;
+  background: #f8edf2;
+  border-radius: 10px;
+  line-height: 1.7;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Monirul Skin Lab</h1>
+  <p>Discover Your Skincare Needs</p>
+</header>
+
+<main>
+  <div class="card">
+    <h2>ত্বকের যত্নের পরামর্শ</h2>
+    <p>নিচের প্রশ্নগুলোর উত্তর দিয়ে সাধারণ স্কিনকেয়ার পরামর্শ দেখুন।</p>
+
+    <form id="skinForm">
+
+      <label for="skin">আপনার ত্বকের ধরন</label>
+      <select id="skin">
+        <option value="normal">স্বাভাবিক</option>
+        <option value="oily">তৈলাক্ত</option>
+        <option value="dry">শুষ্ক</option>
+        <option value="combination">মিশ্র</option>
+        <option value="unknown">জানি না</option>
+      </select>
+
+      <label for="concern">আপনার প্রধান উদ্বেগ</label>
+      <select id="concern">
+        <option value="basic">সাধারণ যত্ন</option>
+        <option value="acne">ব্রণ</option>
+        <option value="dryness">শুষ্কতা</option>
+        <option value="spots">কালো দাগ</option>
+        <option value="sensitivity">সংবেদনশীল ত্বক</option>
+      </select>
+
+      <label for="budget">পণ্যের বাজেট</label>
+      <select id="budget">
+        <option value="low">কম বাজেট</option>
+        <option value="medium">মাঝারি বাজেট</option>
+        <option value="high">উচ্চ বাজেট</option>
+      </select>
+
+      <button type="submit">আমার পরামর্শ দেখুন</button>
+
+    </form>
+
+    <div id="result" aria-live="polite"></div>
+  </div>
+</main>
+
+<footer>
+  Monirul Skin Lab | Skincare Education
+</footer>
+
+<script>
+document.getElementById("skinForm").addEventListener("submit",
+function(event) {
+  event.preventDefault();
+
+  const skin = document.getElementById("skin").value;
+  const concern = document.getElementById("concern").value;
+  const budget = document.getElementById("budget").value;
+
+  let advice = [];
+
+  if (skin === "oily") {
+    advice.push("মৃদু ক্লিনজার এবং হালকা, নন-কমেডোজেনিক ময়েশ্চারাইজার বিবেচনা করুন।");
+  } else if (skin === "dry") {
+    advice.push("মৃদু ক্লিনজার ও সুগন্ধিবিহীন ময়েশ্চারাইজার বিবেচনা করুন।");
+  } else if (skin === "combination") {
+    advice.push("ত্বকের বিভিন্ন অংশের চাহিদা অনুযায়ী মৃদু ক্লিনজার ও ময়েশ্চারাইজার ব্যবহার করুন।");
+  } else if (skin === "unknown") {
+    advice.push("ত্বকের ধরন নিশ্চিত না হলে মৃদু, সুগন্ধিবিহীন পণ্য দিয়ে শুরু করুন।");
+  } else {
+    advice.push("মৃদু ক্লিনজার, ময়েশ্চারাইজার ও সানস্ক্রিন দিয়ে সাধারণ যত্ন শুরু করুন।");
+  }
+
+  if (concern === "acne") {
+    advice.push("ব্রণের জন্য নন-কমেডোজেনিক পণ্য বেছে নিন। গুরুতর বা স্থায়ী ব্রণে চর্মরোগ বিশেষজ্ঞের পরামর্শ নিন।");
+  } else if (concern === "dryness") {
+    advice.push("ত্বকের আর্দ্রতা ধরে রাখতে ময়েশ্চারাইজার ব্যবহার করুন।");
+  } else if (concern === "spots") {
+    advice.push("প্রতিদিন ব্রড-স্পেকট্রাম SPF 30 বা তার বেশি সানস্ক্রিন ব্যবহার করুন।");
+  } else if (concern === "sensitivity") {
+    advice.push("সুগন্ধিবিহীন পণ্য বেছে নিন এবং ব্যবহারের আগে ছোট অংশে পরীক্ষা করুন।");
+  } else {
+    advice.push("ত্বকের যত্নে নিয়মিত সানস্ক্রিন ব্যবহার করুন।");
+  }
+
+  let budgetText = {
+    low: "কম বাজেটে প্রয়োজনীয় মৌলিক পণ্য দিয়ে শুরু করুন।",
+    medium: "বাজেট অনুযায়ী উপাদান ও পণ্যের মান তুলনা করুন।",
+    high: "দামি পণ্য মানেই বেশি কার্যকর নয়; উপাদান ও ত্বকের সহনশীলতা দেখুন।"
+  };
+
+  const result = document.getElementById("result");
+  result.innerHTML =
+    "<h3>আপনার স্কিনকেয়ার পরামর্শ</h3>" +
+    advice.map(item => "<p>• " + item + "</p>").join("") +
+    "<p>" + budgetText[budget] + "</p>" +
+    "<p><b>দোকানের পণ্যের পরামর্শ:</b> এখনো পণ্যের তালিকা যোগ করা হয়নি।</p>" +
+    "<small>এটি সাধারণ তথ্য, চিকিৎসাগত পরীক্ষা বা রোগ নির্ণয় নয়।</small>";
+
+  result.style.display = "block";
+});
+</script>
+
+</body>
+</html>
