@@ -1,179 +1,766 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monirul Skin Lab</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monirul Skin Lab | Beauty & Lifestyle</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fff8f5;
-  color: #382b32;
-}
-header {
-  background: #75465b;
-  color: white;
-  text-align: center;
-  padding: 25px 12px;
-}
-header h1 {
-  margin: 0 0 8px;
-}
-main {
-  max-width: 600px;
-  margin: 25px auto;
-  padding: 20px;
-}
-.card {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 3px 15px #00000010;
-}
-label {
-  display: block;
-  margin-top: 18px;
-  font-weight: bold;
-}
-select, button {
-  width: 100%;
-  padding: 13px;
-  margin-top: 8px;
-  border-radius: 8px;
-  font-size: 16px;
-}
-select {
-  border: 1px solid #c9b5bd;
-  background: white;
-}
-button {
-  border: none;
-  background: #75465b;
-  color: white;
-  font-weight: bold;
-  margin-top: 24px;
-}
-#result {
-  display: none;
-  margin-top: 20px;
-  padding: 16px;
-  background: #f8edf2;
-  border-radius: 10px;
-  line-height: 1.7;
-}
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 13px;
-}
-</style>
+  <style>
+    :root {
+      --primary: #2d3748;
+      --accent: #d5a6bd;
+      --accent-hover: #c48da8;
+      --bg-light: #faf7f8;
+      --card-bg: #ffffff;
+      --text-dark: #1a202c;
+      --text-muted: #718096;
+      --border-color: #edf2f7;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-md: 0 10px 25px rgba(0,0,0,0.06);
+      --radius: 12px;
+      --transition: all 0.25s ease-in-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* --- HEADER & NAVIGATION --- */
+    header {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .brand-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #2d3748, #d5a6bd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .search-box {
+      flex: 1;
+      max-width: 450px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.65rem 1rem 0.65rem 2.5rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-color);
+      background-color: #f8fafc;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      background-color: #fff;
+      box-shadow: 0 0 0 3px rgba(213, 166, 189, 0.2);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: #f1f5f9;
+      border: none;
+      padding: 0.65rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .cart-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .cart-count {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 2.5rem 1.5rem;
+      background: linear-gradient(135deg, #fff0f5 0%, #e6e6fa 100%);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* --- CATEGORY FILTERS --- */
+    .categories-wrapper {
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .categories {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }
+
+    .category-btn {
+      padding: 0.55rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+      color: var(--text-dark);
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* --- PRODUCT GRID --- */
+    .products-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .product-img-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 100%; /* 1:1 Aspect Ratio */
+      background: #f8fafc;
+      overflow: hidden;
+    }
+
+    .product-img-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent-hover);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0.25rem 0 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .product-bottom {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.75rem;
+    }
+
+    .product-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .add-to-cart-btn {
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: var(--transition);
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* --- CART SLIDE-OVER MODAL --- */
+    .cart-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      display: none;
+      backdrop-filter: blur(3px);
+    }
+
+    .cart-modal-overlay.active {
+      display: block;
+    }
+
+    .cart-modal {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .cart-modal-overlay.active .cart-modal {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-header h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .close-cart-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #f8fafc;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .cart-item-price {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .qty-btn {
+      background: #edf2f7;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #e53e3e;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: auto;
+    }
+
+    .cart-footer {
+      padding: 1.25rem;
+      border-top: 1px solid var(--border-color);
+      background: #f8fafc;
+    }
+
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .whatsapp-checkout-btn {
+      width: 100%;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      padding: 0.85rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .whatsapp-checkout-btn:hover {
+      background-color: #1eb956;
+    }
+
+    .empty-cart-msg {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 3rem;
+    }
+
+    /* --- RESPONSIVE ADJUSTMENTS --- */
+    @media (max-width: 640px) {
+      .header-container {
+        flex-wrap: wrap;
+      }
+      .search-box {
+        order: 3;
+        max-width: 100%;
+        margin-top: 0.5rem;
+      }
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Monirul Skin Lab</h1>
-  <p>Discover Your Skincare Needs</p>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="brand">
+        <i class="fa-solid fa-flask-vial fa-lg" style="color: var(--accent-hover);"></i>
+        <span class="brand-title">Monirul Skin Lab</span>
+      </a>
 
-<main>
-  <div class="card">
-    <h2>ত্বকের যত্নের পরামর্শ</h2>
-    <p>নিচের প্রশ্নগুলোর উত্তর দিয়ে সাধারণ স্কিনকেয়ার পরামর্শ দেখুন।</p>
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search product..." oninput="filterProducts()">
+      </div>
 
-    <form id="skinForm">
+      <div class="header-actions">
+        <button class="cart-btn" onclick="toggleCartModal()">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-      <label for="skin">আপনার ত্বকের ধরন</label>
-      <select id="skin">
-        <option value="normal">স্বাভাবিক</option>
-        <option value="oily">তৈলাক্ত</option>
-        <option value="dry">শুষ্ক</option>
-        <option value="combination">মিশ্র</option>
-        <option value="unknown">জানি না</option>
-      </select>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Glow Naturally & Authentically</h1>
+    <p>Discover curated skincare, makeup, perfumes & accessories tailored for you.</p>
+  </section>
 
-      <label for="concern">আপনার প্রধান উদ্বেগ</label>
-      <select id="concern">
-        <option value="basic">সাধারণ যত্ন</option>
-        <option value="acne">ব্রণ</option>
-        <option value="dryness">শুষ্কতা</option>
-        <option value="spots">কালো দাগ</option>
-        <option value="sensitivity">সংবেদনশীল ত্বক</option>
-      </select>
-
-      <label for="budget">পণ্যের বাজেট</label>
-      <select id="budget">
-        <option value="low">কম বাজেট</option>
-        <option value="medium">মাঝারি বাজেট</option>
-        <option value="high">উচ্চ বাজেট</option>
-      </select>
-
-      <button type="submit">আমার পরামর্শ দেখুন</button>
-
-    </form>
-
-    <div id="result" aria-live="polite"></div>
+  <!-- CATEGORY FILTERS -->
+  <div class="categories-wrapper">
+    <div class="categories" id="categoryButtons">
+      <button class="category-btn active" onclick="setCategory('all', this)">All Products</button>
+      <button class="category-btn" onclick="setCategory('skincare', this)">Skincare</button>
+      <button class="category-btn" onclick="setCategory('makeup', this)">Makeup</button>
+      <button class="category-btn" onclick="setCategory('perfume', this)">Perfume</button>
+      <button class="category-btn" onclick="setCategory('jewelry', this)">Jewelry</button>
+      <button class="category-btn" onclick="setCategory('bags', this)">Bags</button>
+      <button class="category-btn" onclick="setCategory('accessories', this)">Accessories</button>
+    </div>
   </div>
-</main>
 
-<footer>
-  Monirul Skin Lab | Skincare Education
-</footer>
+  <!-- PRODUCT GRID -->
+  <main class="products-container">
+    <div class="product-grid" id="productGrid">
+      <!-- Dynamic Products Inserted Here -->
+    </div>
+  </main>
 
-<script>
-document.getElementById("skinForm").addEventListener("submit",
-function(event) {
-  event.preventDefault();
+  <!-- SHOPPING CART SLIDE-OVER -->
+  <div class="cart-modal-overlay" id="cartOverlay">
+    <div class="cart-modal">
+      <div class="cart-header">
+        <h2>Your Shopping Bag</h2>
+        <button class="close-cart-btn" onclick="toggleCartModal()">&times;</button>
+      </div>
 
-  const skin = document.getElementById("skin").value;
-  const concern = document.getElementById("concern").value;
-  const budget = document.getElementById("budget").value;
+      <div class="cart-items" id="cartItems">
+        <!-- Dynamic Cart Items Inserted Here -->
+      </div>
 
-  let advice = [];
+      <div class="cart-footer">
+        <div class="cart-subtotal">
+          <span>Total</span>
+          <span id="cartTotal">৳ 0</span>
+        </div>
+        <button class="whatsapp-checkout-btn" onclick="checkoutWhatsApp()">
+          <i class="fa-brands fa-whatsapp fa-lg"></i> Order via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
 
-  if (skin === "oily") {
-    advice.push("মৃদু ক্লিনজার এবং হালকা, নন-কমেডোজেনিক ময়েশ্চারাইজার বিবেচনা করুন।");
-  } else if (skin === "dry") {
-    advice.push("মৃদু ক্লিনজার ও সুগন্ধিবিহীন ময়েশ্চারাইজার বিবেচনা করুন।");
-  } else if (skin === "combination") {
-    advice.push("ত্বকের বিভিন্ন অংশের চাহিদা অনুযায়ী মৃদু ক্লিনজার ও ময়েশ্চারাইজার ব্যবহার করুন।");
-  } else if (skin === "unknown") {
-    advice.push("ত্বকের ধরন নিশ্চিত না হলে মৃদু, সুগন্ধিবিহীন পণ্য দিয়ে শুরু করুন।");
-  } else {
-    advice.push("মৃদু ক্লিনজার, ময়েশ্চারাইজার ও সানস্ক্রিন দিয়ে সাধারণ যত্ন শুরু করুন।");
-  }
+  <script>
+    // --- CONFIGURATION ---
+    const WHATSAPP_NUMBER = "8801700000000"; // Replace with your Bangladesh phone number
 
-  if (concern === "acne") {
-    advice.push("ব্রণের জন্য নন-কমেডোজেনিক পণ্য বেছে নিন। গুরুতর বা স্থায়ী ব্রণে চর্মরোগ বিশেষজ্ঞের পরামর্শ নিন।");
-  } else if (concern === "dryness") {
-    advice.push("ত্বকের আর্দ্রতা ধরে রাখতে ময়েশ্চারাইজার ব্যবহার করুন।");
-  } else if (concern === "spots") {
-    advice.push("প্রতিদিন ব্রড-স্পেকট্রাম SPF 30 বা তার বেশি সানস্ক্রিন ব্যবহার করুন।");
-  } else if (concern === "sensitivity") {
-    advice.push("সুগন্ধিবিহীন পণ্য বেছে নিন এবং ব্যবহারের আগে ছোট অংশে পরীক্ষা করুন।");
-  } else {
-    advice.push("ত্বকের যত্নে নিয়মিত সানস্ক্রিন ব্যবহার করুন।");
-  }
+    // --- PRODUCTS DATA ---
+    const products = [
+      // Skincare
+      { id: 1, name: "Hydrating Hyaluronic Serum", category: "skincare", price: 1450, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=400" },
+      { id: 2, name: "Gentle Foaming Cleanser", category: "skincare", price: 950, image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=400" },
+      { id: 3, name: "Niacinamide Glow Cream", category: "skincare", price: 1200, image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=400" },
+      
+      // Makeup
+      { id: 4, name: "Matte Velvet Lipstick", category: "makeup", price: 850, image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&q=80&w=400" },
+      { id: 5, name: "Radiant Liquid Foundation", category: "makeup", price: 1850, image: "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?auto=format&fit=crop&q=80&w=400" },
+      
+      // Perfume
+      { id: 6, name: "Rose & Vanilla Eau De Parfum", category: "perfume", price: 3200, image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&q=80&w=400" },
+      { id: 7, name: "Midnight Amber Perfume Spray", category: "perfume", price: 2900, image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=400" },
+      
+      // Jewelry
+      { id: 8, name: "Minimalist Gold Plated Necklace", category: "jewelry", price: 1100, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=400" },
+      { id: 9, name: "Pearl Drop Earrings", category: "jewelry", price: 750, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=400" },
+      
+      // Bags
+      { id: 10, name: "Classic Leather Crossbody Bag", category: "bags", price: 2450, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=400" },
+      { id: 11, name: "Structured Mini Tote Bag", category: "bags", price: 2800, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=400" },
+      
+      // Accessories
+      { id: 12, name: "UV Protection Sunglasses", category: "accessories", price: 1350, image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&q=80&w=400" },
+      { id: 13, name: "Silk Hair Scrunchie Set", category: "accessories", price: 450, image: "https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&fit=crop&q=80&w=400" }
+    ];
 
-  let budgetText = {
-    low: "কম বাজেটে প্রয়োজনীয় মৌলিক পণ্য দিয়ে শুরু করুন।",
-    medium: "বাজেট অনুযায়ী উপাদান ও পণ্যের মান তুলনা করুন।",
-    high: "দামি পণ্য মানেই বেশি কার্যকর নয়; উপাদান ও ত্বকের সহনশীলতা দেখুন।"
-  };
+    // --- STATE MANAGEMENT ---
+    let cart = [];
+    let activeCategory = "all";
 
-  const result = document.getElementById("result");
-  result.innerHTML =
-    "<h3>আপনার স্কিনকেয়ার পরামর্শ</h3>" +
-    advice.map(item => "<p>• " + item + "</p>").join("") +
-    "<p>" + budgetText[budget] + "</p>" +
-    "<p><b>দোকানের পণ্যের পরামর্শ:</b> এখনো পণ্যের তালিকা যোগ করা হয়নি।</p>" +
-    "<small>এটি সাধারণ তথ্য, চিকিৎসাগত পরীক্ষা বা রোগ নির্ণয় নয়।</small>";
+    // --- RENDER FUNCTIONS ---
+    function renderProducts() {
+      const grid = document.getElementById("productGrid");
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
 
-  result.style.display = "block";
-});
-</script>
+      const filteredProducts = products.filter(product => {
+        const matchesCategory = activeCategory === "all" || product.category === activeCategory;
+        const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+        return matchesCategory && matchesSearch;
+      });
 
+      if (filteredProducts.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">No products found matching your search.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card">
+          <div class="product-img-wrapper">
+            <img src="${product.image}" alt="${product.name}" loading="lazy">
+          </div>
+          <div class="product-info">
+            <span class="product-category">${product.category}</span>
+            <h3 class="product-name">${product.name}</h3>
+            <div class="product-bottom">
+              <span class="product-price">৳ ${product.price}</span>
+              <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                <i class="fa-solid fa-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderCart() {
+      const cartContainer = document.getElementById("cartItems");
+      const cartCountEl = document.getElementById("cartCount");
+      const cartTotalEl = document.getElementById("cartTotal");
+
+      // Update badge counter
+      const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCountEl.textContent = totalCount;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `<p class="empty-cart-msg">Your shopping bag is empty.</p>`;
+        cartTotalEl.textContent = "৳ 0";
+        return;
+      }
+
+      let grandTotal = 0;
+
+      cartContainer.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.quantity;
+        grandTotal += itemTotal;
+
+        return `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-price">৳ ${item.price} x ${item.quantity} = ৳ ${itemTotal}</div>
+              <div class="cart-item-controls">
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                <span>${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+              </div>
+            </div>
+            <button class="remove-btn" onclick="removeFromCart(${item.id})">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      cartTotalEl.textContent = `৳ ${grandTotal}`;
+    }
+
+    // --- CART ACTIONS ---
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const existing = cart.find(item => item.id === productId);
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+
+      renderCart();
+      toggleCartModal(true); // Auto-open cart when adding item
+    }
+
+    function updateQuantity(productId, change) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+
+      item.quantity += change;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== productId);
+      }
+
+      renderCart();
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(i => i.id !== productId);
+      renderCart();
+    }
+
+    function toggleCartModal(show = null) {
+      const overlay = document.getElementById("cartOverlay");
+      if (show === true) {
+        overlay.classList.add("active");
+      } else if (show === false) {
+        overlay.classList.remove("active");
+      } else {
+        overlay.classList.toggle("active");
+      }
+    }
+
+    // Close cart when clicking outside modal body
+    document.getElementById("cartOverlay").addEventListener("click", function(e) {
+      if (e.target === this) {
+        toggleCartModal(false);
+      }
+    });
+
+    // --- FILTER & SEARCH ---
+    function setCategory(category, button) {
+      activeCategory = category;
+      document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+      renderProducts();
+    }
+
+    function filterProducts() {
+      renderProducts();
+    }
+
+    // --- WHATSAPP ORDER INTEGRATION ---
+    function checkoutWhatsApp() {
+      if (cart.length === 0) {
+        alert("Your shopping bag is empty!");
+        return;
+      }
+
+      let message = `Hello *Monirul Skin Lab*, I would like to place an order:\n\n`;
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        message += `${index + 1}. *${item.name}*\n   Qty: ${item.quantity} | Price: ৳${itemTotal}\n`;
+      });
+
+      message += `\n*Total Order Value:* ৳${total}\n\nPlease confirm availability and payment details. Thank you!`;
+
+      // Encode message text for WhatsApp URI
+      const encodedMsg = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+
+      window.open(whatsappUrl, "_blank");
+    }
+
+    // Initialize Page
+    renderProducts();
+    renderCart();
+  </script>
 </body>
 </html>
